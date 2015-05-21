@@ -90,7 +90,7 @@ out = os.fdopen(fd, 'w')
 out.write(swigdata)
 out.close()
 
-swig_cmd = [swig, '-I.', '-python', '-o',
+swig_cmd = [swig, '-I%s' % opts.picosat_dir, '-python', '-o',
             'picosat_python_wrap.c'] + \
             ['-I%s' % p for p in opts.extra_include_dir] + [swigfile]
 msg(' '.join(swig_cmd))
@@ -100,8 +100,8 @@ if os.path.exists(swigfile):
     os.unlink(swigfile)
 
 if p.returncode == 0 and not opts.swig_only:
-    incdirs = [args.picosat_dir] + opts.extra_include_dir
-    libdirs = [args.picosat_dir] + opts.extra_lib_dir
+    incdirs = [opts.picosat_dir] + opts.extra_include_dir
+    libdirs = [opts.picosat_dir] + opts.extra_lib_dir
     msg("Compiling the extension module...")
     extra_compile_args = opts.extra_compile_args.split()
     if distutils.ccompiler.get_default_compiler() == 'unix':
