@@ -1,0 +1,27 @@
+language: python
+sudo: false
+
+addons:
+  apt:
+    packages:
+    - python-setuptools
+    - python-pip
+    - python-dev
+    - make
+    - build-essential
+    - swig
+    - autoconf
+    - libtool
+    - python3-dev
+
+python:
+  - 2.7
+  - 3.4
+
+install:
+  - echo "Setting up environment..."
+  - ./travis.sh
+
+script:
+  - env
+  - ./build.sh picosat-960

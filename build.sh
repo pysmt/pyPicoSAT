@@ -15,3 +15,5 @@ make
 
 cd $DIR
 $PYTHON ./setup.py --picosat-dir="$PICOSAT_DIR" build
+
+$PYTHON ./setup.py bdist --picosat-dir="$PICOSAT_DIR"
