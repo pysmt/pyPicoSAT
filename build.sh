@@ -10,10 +10,15 @@ if [ "X${PICOSAT_DIR}" == "X" ]; then
 fi
 
 cd $PICOSAT_DIR
-sh configure -shared
+export CFLAGS=" -fPIC"
+sh configure
 make
 
 cd $DIR
-$PYTHON ./setup.py --picosat-dir="$PICOSAT_DIR" build
+# SWIG
+swig -I${PICOSAT_DIR} -python -o picosat_python_wrap.c picosat_python.i
+# Build
+$PYTHON ./setup.py build
 
-$PYTHON ./setup.py bdist --picosat-dir="$PICOSAT_DIR"
+# PKG (This is done by travis-CI. It is left here for reference)
+# $PYTHON ./setup.py egg_info --tag-date --tag-build=.dev bdist_wheel
