@@ -16,10 +16,12 @@ script:
   - if [ ${PYTHON_VERSION} == "3.4" ]; then python3 setup.py bdist_wheel; fi
 
 deploy:
+  skip_cleanup: true
   provider: releases
   api_key:
     secure: bG7mKOIBLrCfzN1GGdPVV+Argmlyd4PguVcYbIqdG+sBeORFR2HRDsP1/pUzAfoazJj6bJURT6Dbp8pNkCfg6WVXZc5yfyAdn4fdj/gxumR0C03AzNnekBPd/SV8b2JYNjA6/dneHxkFrZPVNZYnMW9jAMMviM9OdL3YZAjAl3dOjBwxBL3NZR1GIFHJuw13fAeifLkKoPHDTl7hZqsoFra/ZpYtq40BmuTUNxvPimQFEeZwGq/inOQ4oSXjy2vM0TDuyz7IgCZT4HlBeBUDY98qG2fWpGTj8tb+UBKbwPWKs/VAyUTrGFu6wapYTu7CRWei4tBd4VFXTHzq9ovQpcfRUySU1MgA69t+x4XmogvCc39m2jEWUozDKSi+piQ+SqQsRY0I21SYXlbYKaYNacNu2kyDQE/9TqbK0shvd7ZxAhzXG9ioOz79Ua3LabdZ1CX3jDmDCgDENYgnOcIAvd0GlLUTIIXeKowWfF2hWA+2uJoDnoUqoP6J2Jzl1fk3N+zIijEAdE1a5V8F/cHrA48T0jXKxDsMhHZwtxXatOT4J3a++Jkw89o1Erf4CmrlQWeWYEdB8QKK2E5rc41uygHF0aVchP9LB8Dj4SBfscrhntuUAiuf0BpHoCum1RX4ri5gfyoiI99Za+S8lbiKOv9qxYyP64uHnuYoCVxfcfQ=
   file: dist/*
   on:
+    tags: true
     repo: marcogario/pyPicoSAT
     branch: demo_macosx
