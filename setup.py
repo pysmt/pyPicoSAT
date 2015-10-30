@@ -5,8 +5,9 @@ from datetime import datetime
 PICOSAT_VERSION='960'
 PICOSAT_DIR='picosat-%s' % PICOSAT_VERSION
 
-PYPICOSAT_MINOR_VERSION='.dev%s' % datetime.utcnow().strftime("%y%m%d%H%M")
-PYPICOSAT_VERSION='%s%s' % (PICOSAT_VERSION, PYPICOSAT_MINOR_VERSION)
+PYPICOSAT_MINOR_VERSION='%s' % datetime.utcnow().strftime("%y%m%d")
+# Major number is Picosat Version, minor number creation date of the bindings
+PYPICOSAT_VERSION='%s.%s' % (PICOSAT_VERSION, PYPICOSAT_MINOR_VERSION)
 
 picosat_ext = Extension('_picosat', ['picosat_python_wrap.c'],
                         include_dirs=[PICOSAT_DIR],
