@@ -1,31 +1,52 @@
-language: python
-sudo: false
-addons:
-  apt:
-    packages:
-    - python-setuptools
-    - python-pip
-    - python-dev
-    - make
-    - build-essential
-    - swig
-    - autoconf
-    - libtool
-    - python3-dev
+os: osx
+language: objective-c
+env:
+  matrix:
+    # Set up python environment
+    # Parameters:
+    #     $install_type : {macpython|macports|homebrew|system}
+    #         Type of Python to install
+    #     $version :
+    #         macpython : major.minor.micro e.g. "3.4.1"
+    #         macports : major.minor e.g. "3.4"
+    #         homebrew : major e.g "3"
+    #         system : ignored (but required to be not empty)
+    #     $venv_dir : {directory_name|not defined}
+    #         If defined - make virtualenv in this directory, set python / pip
+    #         commands accordingly
+    # ARCH ???
+    - INSTALL_TYPE=macpython VERSION=2.7.9
+    - INSTALL_TYPE=macpython VERSION=3.5.0
+    - INSTALL_TYPE=homebrew VERSION=3
+    - INSTALL_TYPE=homebrew VERSION=2
 
-python:
-- 2.7
+install:
+  - brew update
+  - brew install swig
+  - source terryfy/travis_tools.sh
+  # Install Python and pip, maybe virtualenv
+  - get_python_environment $INSTALL_TYPE $VERSION $VENV
+  - ${PIP_CMD} install wheel
+  - ${PIP_CMD} install delocate
+
 
 script:
-- "./build.sh picosat-960"
+  - export PYTHON=`which python3`
+  - "./build.sh picosat-960"
+  - ${PYTHON_EXE} --version
+  - ${PYTHON_EXE} setup.py bdist_wheel
+  - delocate-listdeps dist/*.whl
+
 
 deploy:
-  provider: pypi
-  user: marco.gario
-  password:
-    secure: "B5rykJvd0ASENuipOIPYGZLaUgeWG525UYDL7lSBdNcv6umGXw+lmy0XqLWlOChMVyFaUb5wXb6z2rakek/Dy5l1Qi/cdUWsreICxpA/x3dQqC3Vrad3uHKvkbj3MIkVCRViQEPLcdl1bgCmScwv61pAajo1tjRZLsK0aZLxSgx7mbgYHSAvdlwfw3E5jXjcCUNmuj39Xb34dTVDUCh29F3lG0weFCyODyeOO5VYvwsn+bQC8lFWo6+wdevAQbegmos2gy9mFt8vaTFA7nV2y1NHsrlZ1A0m4YjsFzuxgTflA0Rwg5gjvF5F3aG8z2o0ylPpeHYIyoa5k9BnA+pmmKXkmBWc7WbUcwFm++LS1oWm2oR4tjnVc7WUKHAameG4wefICjDkCmsDN/5qDS7l3/ujvoHZiIGBI+F7EJy/ps5fy41H4JEt12nC0HznFSlyzeuOof0kOsqJS9NP8TANCrrXxojvTdtgd+fRSRwQGYJdHopH4NlqUDMt3Ipk9/PtNK5njlxRXiux6hOdAPIE6KGDH5nOiC7/0/YFrzVYd6Pd/HfoeX+AdfdSsCnZebyoYkttBMpsbufbCEjW6CU/XSCJktcvgq4hByI2a6ykiSfisndq4/NiYLYBrS3JQ6bQ+QVtDWNI7AVjGDtE993HWaYrNgYoXC7qHzV71b/y+qQ="
-#server: https://testpypi.python.org/pypi
+  skip_cleanup: true
+  provider: s3
+  access_key_id: AKIAJDNB65PKLACZDGYQ
+  secret_access_key:
+    secure: "SgKZC/pgaiNy0emGPGDoXvlzKU2//NA+Bii6NNlCcmoGwoGAiru0lLIWAWDkVAyQRQQJvRwj3LdqPitOpka2H1ljvnD0+lX7P+NtPIAneDMEFxCV3m+9t0CthtKCyqJt9cqtrb+O9P0po1+dt8cKtd8l0dd1N+dAIFMcO0amx8wabYqm5Cm1HVVXcq61RUJUUO3l9wdbFqIKL1ULG+DyA3lZX2WqHj/IsQHfLgkzV0H6eGStWl7TjlujweWOWXDGbv/kbg2r1mazs5pELiX6KFIkMErPXhXng5oOPgUQuiJAVRMRno1+W9j74nOWhO/7L90gBmkpnV5g3eoYDVETvUsPmsrUZEm+OFafwE2DdPoXmdBHl4OvDq0U2LiHErxMr7JWDpume4F+rPg4cufATovmQruYEclVaIheVvZlrke1QY+kbuAlCD5JKmcjwbrbqovZbR/8xXN8MQRJ4Mkte6zY4dunZA0dLuHukQHdFO2S5a5dIJSBnLGkFbmu/KoNVI2Jxl/M3wfwQub7oZ82107/GWFS1wRN+whJuGw+mPbVkvG8LlTWnjvWMTPEnMFp3FHl3265X+X70duroBVdqCMoiyed8olL6qlSCYmHAT6C+hOBQ0dSpz9bWLdlONE8UmCXEAtZN1jbO2/YNI/NcPKCtrc00U1w6X0wlpkNZa8="
+  bucket: pysmt-pkgs
+  region: eu-central-1
+  local-dir: dist/
   on:
-    all_branches: true
-  distributions: sdist
-  skip_cleanup: true # Need to Preserve generated SWIG
+    branch: dist/macosx
+    repo: pysmt/pyPicoSAT
