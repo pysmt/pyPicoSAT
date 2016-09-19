@@ -1,6 +1,13 @@
 # pyPicoSAT
 PicoSAT SAT Solver Python Wrapper
 
+Two wrappers are available in this repository:
+
+* A SWIG wrapper (picosat_python.i)
+* A CFFI wrapper (picosat_cffi.py)
+
+
+
 # LICENSE
 Copyright (c) 2015, Andrea Micheli and Marco Gario
 
