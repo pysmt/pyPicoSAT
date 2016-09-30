@@ -2,6 +2,7 @@
 
 PICOSAT_DIR=$1
 PYTHON=`which python`
+#PYTHON=`which python3.5`
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 if [ "X${PICOSAT_DIR}" == "X" ]; then
@@ -15,8 +16,8 @@ sh configure
 make
 
 cd $DIR
-# SWIG
-swig -I${PICOSAT_DIR} -python -o picosat_python_wrap.c picosat_python.i
+# SWIG (swig is handled within setup.py)
+# swig -I${PICOSAT_DIR} -python -o picosat_python_wrap.c picosat_python.i
 # Build
 $PYTHON ./setup.py build
 

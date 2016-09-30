@@ -1,3 +1,4 @@
+import os
 from setuptools import setup
 from distutils.extension import Extension
 from datetime import datetime
@@ -8,8 +9,11 @@ PICOSAT_DIR='picosat-%s' % PICOSAT_VERSION
 PYPICOSAT_MINOR_VERSION='%s' % datetime.utcnow().strftime("%y%m%d")
 # Major number is Picosat Version, minor number creation date of the bindings
 PYPICOSAT_VERSION='%s.%s' % (PICOSAT_VERSION, PYPICOSAT_MINOR_VERSION)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-picosat_ext = Extension('_picosat', ['picosat_python_wrap.c'],
+picosat_ext = Extension('_picosat',
+                        [os.path.join(BASE_DIR, 'picosat_python.i')],
+                        swig_opts=['-I%s' % os.path.join(BASE_DIR, PICOSAT_DIR)],
                         include_dirs=[PICOSAT_DIR],
                         library_dirs=[PICOSAT_DIR],
                         libraries=['picosat'],
