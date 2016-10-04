@@ -1,52 +1,13 @@
 os: osx
 language: objective-c
-env:
-  matrix:
-    # Set up python environment
-    # Parameters:
-    #     $install_type : {macpython|macports|homebrew|system}
-    #         Type of Python to install
-    #     $version :
-    #         macpython : major.minor.micro e.g. "3.4.1"
-    #         macports : major.minor e.g. "3.4"
-    #         homebrew : major e.g "3"
-    #         system : ignored (but required to be not empty)
-    #     $venv_dir : {directory_name|not defined}
-    #         If defined - make virtualenv in this directory, set python / pip
-    #         commands accordingly
-    # ARCH ???
-    - INSTALL_TYPE=macpython VERSION=2.7.9
-    - INSTALL_TYPE=macpython VERSION=3.5.0
-    - INSTALL_TYPE=homebrew VERSION=3
-    - INSTALL_TYPE=homebrew VERSION=2
 
 install:
-  - brew update
-  - brew install swig
-  - source terryfy/travis_tools.sh
-  # Install Python and pip, maybe virtualenv
-  - get_python_environment $INSTALL_TYPE $VERSION $VENV
-  - ${PIP_CMD} install wheel
-  - ${PIP_CMD} install delocate
-
+  - "brew update"
+  - "brew install swig"
+  - "brew install python"
+  - hash -r python
 
 script:
-  - export PYTHON=`which python3`
   - "./build.sh picosat-960"
-  - ${PYTHON_EXE} --version
-  - ${PYTHON_EXE} setup.py bdist_wheel
-  - delocate-listdeps dist/*.whl
-
-
-deploy:
-  skip_cleanup: true
-  provider: s3
-  access_key_id: AKIAJDNB65PKLACZDGYQ
-  secret_access_key:
-    secure: "l4WHJDpH31i2dec/LDsd7bF4Eco0lPZWgRCy/lJDf+tF30xapu6zQ4QLWHpUQ+usJeMfSy7Sle0syoRvUgyF3W/vYZPEuG59IbW0rSBreCXwtqFAXyFbcwDf3t94l+FcPrGjjezIzFiHsVj529KmgqNxpLr2EqrjykQqUgdPJmvMrGn5GCf+MUQJjh4UHt37m2Pbx1GvdNyV46/NdzwST6dIx1dFUj2Ml9d9qkSrXByaA2kKEG62dlKvoummJKLEo2HGfDnGGThHcjGT8W+Fv1WVhp+ZyUAXIn0dVmMET+FA/yV3NzaqnHFT8zkl3pUHC7b+t3AeMilSFaBp6hxNx6/PDkfJnh+7eAFs6zXHaX3nfSsujQen4k0qT8knegg15iIdliHoNOu63XYGngHtzHqgrbI2mmX1TWSF0/3hVo1W05+f99sHQkvZr2TbRjB5ccPfiNEo8YzzOpJt9Er2aUGmI0feWrGPqGWH5T94S/EFAzmmndhTqFTpwkH7DEmWsDlxrTDKUrLWIqN2pDOioBAyDSKmKEMaULloAk2XxRRiDtKNtCR74Z4OTZDH2Yq6gnEpAcaGmsfeRm5laG1QLdZl5JSDb659HR7nfhLgYGPI2txpt2ejFVdw7wvUaXBsemCYrAKNh8k+P6qPuqAmnWWlY8+D4jvGWm+jXZws3Lg="
-  bucket: pysmt-pkgs
-  region: eu-central-1
-  local-dir: dist/
-  on:
-    branch: dist/macosx
-    repo: pysmt/pyPicoSAT
+  - python setup.py install
+  - python demo.py

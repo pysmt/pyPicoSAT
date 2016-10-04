@@ -1,1 +1,3 @@
 graft picosat-960
+include picosat_python.i
+exclude picosat.py
