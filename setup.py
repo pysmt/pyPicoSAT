@@ -6,9 +6,7 @@ from datetime import datetime
 PICOSAT_VERSION='960'
 PICOSAT_DIR='picosat-%s' % PICOSAT_VERSION
 
-#PYPICOSAT_MINOR_VERSION='%s' % datetime.utcnow().strftime("%y%m%d")
-#
-PYPICOSAT_MINOR_VERSION='dev%s' % datetime.utcnow().strftime("%y%m%d%H%M")
+PYPICOSAT_MINOR_VERSION='%s' % datetime.utcnow().strftime("%y%m%d%H%M")
 # Major number is Picosat Version, minor number creation date of the bindings
 PYPICOSAT_VERSION='%s.%s' % (PICOSAT_VERSION, PYPICOSAT_MINOR_VERSION)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
