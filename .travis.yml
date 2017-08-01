@@ -18,7 +18,7 @@ python:
 - 3.5
 
 script:
-- "./build.sh picosat-960"
+- "./build.sh picosat-965"
 - python setup.py install
 - python demo.py
 
