@@ -3,7 +3,7 @@ from setuptools import setup
 from distutils.extension import Extension
 from datetime import datetime
 
-PICOSAT_VERSION='960'
+PICOSAT_VERSION='965'
 PICOSAT_DIR='picosat-%s' % PICOSAT_VERSION
 
 PYPICOSAT_MINOR_VERSION='%s' % datetime.utcnow().strftime("%y%m%d%H%M")
