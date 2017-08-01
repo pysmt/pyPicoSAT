@@ -12,7 +12,7 @@ fi
 
 cd $PICOSAT_DIR
 export CFLAGS=" -fPIC"
-sh configure -O
+./configure.sh -O
 make
 
 cd $DIR
