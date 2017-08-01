@@ -27,7 +27,7 @@ deploy:
   user: marco.gario
   password:
     secure: "B5rykJvd0ASENuipOIPYGZLaUgeWG525UYDL7lSBdNcv6umGXw+lmy0XqLWlOChMVyFaUb5wXb6z2rakek/Dy5l1Qi/cdUWsreICxpA/x3dQqC3Vrad3uHKvkbj3MIkVCRViQEPLcdl1bgCmScwv61pAajo1tjRZLsK0aZLxSgx7mbgYHSAvdlwfw3E5jXjcCUNmuj39Xb34dTVDUCh29F3lG0weFCyODyeOO5VYvwsn+bQC8lFWo6+wdevAQbegmos2gy9mFt8vaTFA7nV2y1NHsrlZ1A0m4YjsFzuxgTflA0Rwg5gjvF5F3aG8z2o0ylPpeHYIyoa5k9BnA+pmmKXkmBWc7WbUcwFm++LS1oWm2oR4tjnVc7WUKHAameG4wefICjDkCmsDN/5qDS7l3/ujvoHZiIGBI+F7EJy/ps5fy41H4JEt12nC0HznFSlyzeuOof0kOsqJS9NP8TANCrrXxojvTdtgd+fRSRwQGYJdHopH4NlqUDMt3Ipk9/PtNK5njlxRXiux6hOdAPIE6KGDH5nOiC7/0/YFrzVYd6Pd/HfoeX+AdfdSsCnZebyoYkttBMpsbufbCEjW6CU/XSCJktcvgq4hByI2a6ykiSfisndq4/NiYLYBrS3JQ6bQ+QVtDWNI7AVjGDtE993HWaYrNgYoXC7qHzV71b/y+qQ="
-#server: https://testpypi.python.org/pypi
+  #server: https://testpypi.python.org/pypi
   distributions: sdist
   skip_cleanup: true # Need to Preserve generated SWIG
   on:
